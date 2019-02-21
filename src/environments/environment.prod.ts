@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  url: 'https://serene-retreat-75479.herokuapp.com'
 };
