@@ -1,0 +1,20 @@
+<div>
+    <div class="form-group">
+        <label for="">Llave:</label>
+        <input type="text" class="form-control" [(ngModel)]="key">
+    </div>
+    <div class="form-group">
+        <label for="">Mensaje encriptado:</label>
+        <textarea class="form-control" rows="20" [(ngModel)]="img"></textarea>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-info" [disabled]="!key && !img" (click)="decrypt()">Desencriptar</button>
+    </div>
+</div>
+
+<div *ngIf="msg">
+    <div class="form-group">
+        <label for="">Tu mensaje es:</label>
+        <input type="text" class="form-control" [value]="msg" readonly>
+    </div>
+</div>

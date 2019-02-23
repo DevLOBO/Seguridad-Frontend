@@ -9,6 +9,7 @@ import { LoginService } from '../../services/login.service';
 })
 export class LoginComponent {
   formLogin: FormGroup;
+  error: string;
 
   constructor(private fb: FormBuilder, private loginService: LoginService) {
     this.formLogin = fb.group({
@@ -18,7 +19,10 @@ export class LoginComponent {
   }
 
   onSubmit() {
+    this.error = '';
     this.loginService.login(this.formLogin.value)
+      .then(() => this.formLogin.reset())
+      .catch(err => this.error = err);
   }
 
   get username() { return this.formLogin.get('username') }
