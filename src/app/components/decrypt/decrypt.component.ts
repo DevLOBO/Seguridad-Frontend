@@ -28,7 +28,7 @@ export class DecryptComponent {
   convertFileToString(file: File) {
     const reader = new FileReader();
     
-    reader.onload = e =>
+    reader.onload = (e: any) =>
       this.img = btoa(e.target.result);
 
     reader.readAsBinaryString(file);

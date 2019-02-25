@@ -8,10 +8,10 @@
     <div class="form-group">
         <label for="">Mensaje encriptado:</label>
         <div class="row">
-            <div class="w-50">
+            <div class="w-75">
                 <input type="file" class="form-control-file" accept=".png" (change)="convertFileToString($event.target.files[0])">
             </div>
-            <div class="w-50" *ngIf="img">
+            <div class="w-25" *ngIf="img">
                 <img [src]="img | domSecure">
             </div>
         </div>

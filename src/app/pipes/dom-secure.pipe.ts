@@ -7,8 +7,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class DomSecurePipe implements PipeTransform {
   constructor(private domSanitizer: DomSanitizer) { }
 
-  transform(img: string): string {
-    const url: string = this.domSanitizer.bypassSecurityTrustUrl(`data: image/png; base64, ${img}`);
+  transform(img: string) {
+    const url = this.domSanitizer.bypassSecurityTrustUrl(`data: image/png; base64, ${img}`);
     return url;
   }
 }
