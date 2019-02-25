@@ -7,10 +7,17 @@
     </div>
     <div class="form-group">
         <label for="">Mensaje encriptado:</label>
-        <textarea class="form-control" rows="20" [(ngModel)]="img"></textarea>
+        <div class="row">
+            <div class="w-50">
+                <input type="file" class="form-control-file" accept=".png" (change)="convertFileToString($event.target.files[0])">
+            </div>
+            <div class="w-50" *ngIf="img">
+                <img [src]="img | domSecure">
+            </div>
+        </div>
     </div>
     <div class="form-group">
-        <button class="btn btn-info" [disabled]="!key || !img" (click)="decrypt()">Desencriptar</button>
+        <button class="btn btn-primary" (click)="decrypt()" [disabled]="!key || !img">Desencriptar</button>
     </div>
 </div>
 

@@ -14,10 +14,12 @@
     <div class="form-group">
         <label for="">Llave:</label>
         <input type="text" class="form-control" readonly [value]="cryptInfo.key">
-        <small id="helpId" class="text-muted">¡No pierdas tu llave!</small>
     </div>
     <div class="form-group">
         <label for="">Encriptado:</label>
-        <textarea class="form-control" readonly rows="20" [value]="cryptInfo.image"></textarea>
+        <div class="text-center">
+            <img [src]="cryptInfo.image | domSecure" class="img-fluid">
+            <a [href]="cryptInfo.image | domSecure" class="btn btn-lg btn-success ml-3" download="encriptado.png">Descargar</a>
+        </div>
     </div>
 </div>

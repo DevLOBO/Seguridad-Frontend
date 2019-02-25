@@ -24,4 +24,13 @@ export class DecryptComponent {
         this.dialog.open(ModalComponent, { width: '*', data: err['error'] });
       });
   }
+
+  convertFileToString(file: File) {
+    const reader = new FileReader();
+    
+    reader.onload = e =>
+      this.img = btoa(e.target.result);
+
+    reader.readAsBinaryString(file);
+  }
 }

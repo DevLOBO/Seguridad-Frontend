@@ -14,6 +14,7 @@ import { HeaderInterceptorService } from './services/header-interceptor.service'
 import { ModalComponent } from './components/modal/modal.component';
 
 import { MatDialogModule } from '@angular/material';
+import { DomSecurePipe } from './pipes/dom-secure.pipe';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { MatDialogModule } from '@angular/material';
     CrypterComponent,
     EncryptComponent,
     DecryptComponent,
-    ModalComponent
+    ModalComponent,
+    DomSecurePipe
   ],
   imports: [
     BrowserModule,
