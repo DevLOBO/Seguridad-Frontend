@@ -1,4 +1,6 @@
 <div>
+    <h1>Desencriptación</h1>
+    <hr>
     <div class="form-group">
         <label for="">Llave:</label>
         <input type="text" class="form-control" [(ngModel)]="key">
@@ -8,7 +10,7 @@
         <textarea class="form-control" rows="20" [(ngModel)]="img"></textarea>
     </div>
     <div class="form-group">
-        <button class="btn btn-info" [disabled]="!key && !img" (click)="decrypt()">Desencriptar</button>
+        <button class="btn btn-info" [disabled]="!key || !img" (click)="decrypt()">Desencriptar</button>
     </div>
 </div>
 

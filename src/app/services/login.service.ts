@@ -18,9 +18,12 @@ export class LoginService {
           sessionStorage.setItem('token', r.token);
           this.router.navigate(['/crypter']);
           res();
-        } else {
-          rej(r.error);
         }
-      }));
+      }, rej));
+  }
+
+  logout() {
+    sessionStorage.clear();
+    setTimeout(() => this.router.navigate(['/']), 100);
   }
 }

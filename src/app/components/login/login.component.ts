@@ -19,10 +19,9 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    this.error = '';
     this.loginService.login(this.formLogin.value)
       .then(() => this.formLogin.reset())
-      .catch(err => this.error = err);
+      .catch(err => this.error = err['error']['error']);
   }
 
   get username() { return this.formLogin.get('username') }
