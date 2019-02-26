@@ -358,6 +358,8 @@ THE SOFTWARE.
 
 @angular/material/dialog
 
+@angular/material/toolbar
+
 zone.js
 MIT
 The MIT License
