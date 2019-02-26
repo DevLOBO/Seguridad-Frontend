@@ -16,6 +16,7 @@ export class LoginService {
       this.http.post(`${environment.url}/login`, user).subscribe((r: ResponseLogin) => {
         if (r.logged) {
           sessionStorage.setItem('token', r.token);
+          sessionStorage.setItem('username', r.username);
           this.router.navigate(['/crypter']);
           res();
         }
