@@ -2,6 +2,6 @@
     <span>Proyecto: CryptUNITEC</span>
     <span class="ml-4" *ngIf="user">Bienvendio {{ user }}</span>
 
-    <a class="btn btn-primary ml-auto" *ngIf="!logged" [routerLink]="['/login']">Iniciar sesión</a>
-    <a class="btn btn-danger ml-auto" *ngIf="logged" (click)="logout()">Cerrar sesión</a>
+    <a class="btn btn-primary ml-auto" *ngIf="!logged" [routerLink]="['/login']"><i class="fas fa-sign-in"></i> Iniciar sesión</a>
+    <a class="btn btn-danger ml-auto" *ngIf="logged" (click)="logout()"><i class="fas fa-sign-out"></i> Cerrar sesión</a>
 </mat-toolbar>
