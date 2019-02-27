@@ -17,7 +17,10 @@
         </div>
     </div>
     <div class="form-group">
-        <button class="btn btn-primary" (click)="decrypt()" [disabled]="!key || !img">Desencriptar</button>
+        <button class="btn btn-primary" (click)="decrypt()" [disabled]="!key || !img || loading">
+            <span *ngIf="!loading; else load"><i class="fas fa-unlock"></i> Desencriptar</span>
+            <ng-template #load><i class="fas fa-circle-notch fa-spin"></i> Cargando</ng-template>
+        </button>
     </div>
 </div>
 
@@ -27,7 +30,7 @@
         <input type="text" class="form-control" [value]="cryptInfo.username" readonly>
     </div>
     <div class="form-group">
-        <label for="">Tu mensaje es:</label>
+        <label for="">El mensaje es:</label>
         <input type="text" class="form-control" [value]="cryptInfo.message" readonly>
     </div>
 </div>

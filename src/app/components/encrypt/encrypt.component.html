@@ -11,7 +11,10 @@
     </div>
 </div>
 <div class="form-group">
-    <button class="btn btn-outline-primary" (click)="encrypt()" [disabled]="!msg">Encriptar</button>
+    <button class="btn btn-outline-primary" (click)="encrypt()" [disabled]="!msg || loading">
+        <span *ngIf="!loading; else load"><i class="fas fa-lock"></i> Encriptar</span>
+        <ng-template #load><i class="fas fa-circle-notch fa-spin"></i> Cargando</ng-template>
+    </button>
 </div>
 
 <div *ngIf="cryptInfo">
@@ -21,7 +24,7 @@
     </div>
     <div class="form-group">
         <label for="">Expira el:</label>
-        <input type="text" class="form-control" [value]="cryptInfo.date | date:'long'">
+        <input type="text" class="form-control" [value]="cryptInfo.date | date:'full'">
     </div>
     <div class="form-group">
         <label for="">Encriptado:</label>

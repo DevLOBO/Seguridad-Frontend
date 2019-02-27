@@ -13,17 +13,20 @@ export class DecryptComponent {
   img: string;
   key: string;
   cryptInfo: CryptInfo;
+  loading = false;
 
   constructor(private crypterService: CrypterService, private dialog: MatDialog) { }
 
   decrypt() {
+    this.loading = true;
     this.crypterService.decrypt(this.key, this.img)
       .then(dec =>
         this.cryptInfo = dec)
       .catch(err => {
-        this.msg = null;
+        this.cryptInfo = {};
         this.dialog.open(ModalComponent, { width: '*', data: err['error'] });
-      });
+      })
+      .finally(() => this.loading = false);
   }
 
   convertFileToString(file: File) {

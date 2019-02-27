@@ -11,13 +11,16 @@ export class EncryptComponent {
   cryptInfo: CryptInfo;
   msg: string;
   time: number;
+  loading = false;
 
   constructor(private crypterService: CrypterService) { }
 
   encrypt() {
+    this.loading = true;
     this.crypterService.encrypt(this.msg, this.time)
       .then(enc =>
         this.cryptInfo = enc)
-      .catch(console.log);
+      .catch(console.log)
+      .finally(() => this.loading = false);
   }
 }
