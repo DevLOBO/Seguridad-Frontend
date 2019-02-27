@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CrypterService } from '../../services/crypter.service';
 import { MatDialog } from '@angular/material';
 import { ModalComponent } from '../modal/modal.component';
+import { CryptInfo } from '../../models/crypt-info';
 
 @Component({
   selector: 'app-decrypt',
@@ -11,14 +12,14 @@ import { ModalComponent } from '../modal/modal.component';
 export class DecryptComponent {
   img: string;
   key: string;
-  msg: string;
+  cryptInfo: CryptInfo;
 
   constructor(private crypterService: CrypterService, private dialog: MatDialog) { }
 
   decrypt() {
     this.crypterService.decrypt(this.key, this.img)
       .then(dec =>
-        this.msg = dec.message)
+        this.cryptInfo = dec)
       .catch(err => {
         this.msg = null;
         this.dialog.open(ModalComponent, { width: '*', data: err['error'] });

@@ -10,11 +10,12 @@ import { CrypterService } from '../../services/crypter.service';
 export class EncryptComponent {
   cryptInfo: CryptInfo;
   msg: string;
+  time: number;
 
   constructor(private crypterService: CrypterService) { }
 
   encrypt() {
-    this.crypterService.encrypt(this.msg)
+    this.crypterService.encrypt(this.msg, this.time)
       .then(enc =>
         this.cryptInfo = enc)
       .catch(console.log);

@@ -10,9 +10,15 @@ export class CrypterService {
 
   constructor(private http: HttpClient) { }
 
-  encrypt(msg: string): Promise<CryptInfo> {
+  encrypt(msg: string, t: number): Promise<CryptInfo> {
+    const user = sessionStorage.getItem('username');
+    const body: CryptInfo = {
+      message: msg,
+      time: t,
+      username: user
+    };
     return new Promise((res, rej) =>
-      this.http.post(`${environment.url}/encrypt`, msg).subscribe(res, rej));
+      this.http.post(`${environment.url}/encrypt`, body).subscribe(res, rej));
   }
 
   decrypt(key: string, image: string): Promise<CryptInfo> {
