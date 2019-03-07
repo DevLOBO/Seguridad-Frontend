@@ -22,7 +22,7 @@
 
     <div class="form-group">
         <button class="btn btn-block btn-primary" [disabled]="formLogin.invalid || loading" (click)="onSubmit()">
-        <span *ngIf="loading; else load">Iniciar sesión</span>
+        <span *ngIf="!loading; else load">Iniciar sesión</span>
         <ng-template #load><i class="fas fa-circle-notch fa-spin"></i> Por favor espere</ng-template>
         
       </button>
