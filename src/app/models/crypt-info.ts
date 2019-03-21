@@ -4,5 +4,6 @@ export interface CryptInfo {
     key?: string,
     username?: string,
     time?: number,
-    date?: Date
+    date?: Date,
+    to?: string
 }

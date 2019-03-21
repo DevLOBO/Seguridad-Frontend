@@ -10,12 +10,13 @@ export class CrypterService {
 
   constructor(private http: HttpClient) { }
 
-  encrypt(msg: string, t: number): Promise<CryptInfo> {
+  encrypt(msg: string, t: number, email: string): Promise<CryptInfo> {
     const user = sessionStorage.getItem('username');
     const body: CryptInfo = {
       message: msg,
       time: t,
-      username: user
+      username: user,
+      to: email
     };
     return new Promise((res, rej) =>
       this.http.post(`${environment.url}/encrypt`, body).subscribe(res, rej));

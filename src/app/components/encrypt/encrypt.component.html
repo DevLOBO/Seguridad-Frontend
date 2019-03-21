@@ -11,8 +11,12 @@
     </div>
 </div>
 <div class="form-group">
-    <button class="btn btn-outline-primary" (click)="encrypt()" [disabled]="!msg || loading">
-        <span *ngIf="!loading; else load"><i class="fas fa-lock"></i> Encriptar</span>
+    <label for="">Enviar a:</label>
+    <input type="email" class="form-control" [(ngModel)]="email" placeholder="Correo Electrónico">
+</div>
+<div class="form-group">
+    <button class="btn btn-outline-primary" (click)="encrypt()" [disabled]="!(msg && time && email) || loading">
+        <span *ngIf="!loading; else load"><i class="fas fa-lock"></i> Encriptar y Enviar</span>
         <ng-template #load><i class="fas fa-circle-notch fa-spin"></i> Cargando</ng-template>
     </button>
 </div>
