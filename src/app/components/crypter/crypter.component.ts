@@ -6,8 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styles: []
 })
 export class CrypterComponent implements OnInit {
+  roles: string[];
 
-  constructor() { }
+  constructor() {
+    this.roles = JSON.parse(sessionStorage.getItem('roles'));
+  }
 
   ngOnInit() {
   }

@@ -17,6 +17,7 @@ export class LoginService {
         if (r.logged) {
           sessionStorage.setItem('token', r.token);
           sessionStorage.setItem('username', r.username);
+          sessionStorage.setItem('roles', JSON.stringify(r.roles));
           this.router.navigate(['/crypter']);
           res();
         }

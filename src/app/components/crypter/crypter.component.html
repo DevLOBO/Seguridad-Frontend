@@ -1,17 +1,17 @@
 <div class="row btn-group-lg">
-    <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#encrypt" aria-expanded="false" aria-controls="encrypt">
+    <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#encrypt" aria-expanded="false" aria-controls="encrypt" *ngIf="roles.includes('ENCRYPTER')">
         Encriptación
     </button>
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#decrypt" aria-expanded="false" aria-controls="decrypt">
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#decrypt" aria-expanded="false" aria-controls="decrypt" *ngIf="roles.includes('DECRYPTER')">
     Desencriptación
   </button>
 </div>
 
 <div class="row pt-5">
-    <div class="col-6 collapse" id="encrypt">
+    <div class="col-6 collapse" id="encrypt" *ngIf="roles.includes('ENCRYPTER')">
         <app-encrypt></app-encrypt>
     </div>
-    <div class="col-6 collapse" id="decrypt">
+    <div class="col-6 collapse" id="decrypt" *ngIf="roles.includes('DECRYPTER')">
         <app-decrypt></app-decrypt>
     </div>
 </div>
