@@ -16,11 +16,13 @@ import { ModalComponent } from './components/modal/modal.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 import { DomSecurePipe } from './pipes/dom-secure.pipe';
+import { ReLoginComponent } from './components/re-login/re-login.component';
 
 
 @NgModule({
   entryComponents: [
-    ModalComponent
+    ModalComponent,
+    ReLoginComponent
   ],
   declarations: [
     AppComponent,
@@ -30,7 +32,8 @@ import { DomSecurePipe } from './pipes/dom-secure.pipe';
     DecryptComponent,
     ModalComponent,
     DomSecurePipe,
-    ToolbarComponent
+    ToolbarComponent,
+    ReLoginComponent
   ],
   imports: [
     BrowserModule,

@@ -24,7 +24,7 @@
     </div>
 </div>
 
-<div *ngIf="cryptInfo">
+<div *ngIf="cryptInfo && (cryptInfo.username && cryptInfo.message)">
     <div class="form-group">
         <label for="">Creado por:</label>
         <input type="text" class="form-control" [value]="cryptInfo.username" readonly>

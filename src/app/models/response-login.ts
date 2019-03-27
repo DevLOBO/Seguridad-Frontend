@@ -3,5 +3,6 @@ export interface ResponseLogin {
     username?: string,
     token?: string,
     roles?: string[],
+    expiration?: Date,
     error?: string
 }

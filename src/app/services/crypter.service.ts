@@ -23,7 +23,8 @@ export class CrypterService {
   }
 
   decrypt(key: string, image: string): Promise<CryptInfo> {
-    const body: CryptInfo = { image, key };
+    const username = sessionStorage.getItem('username');
+    const body: CryptInfo = { image, key, username };
 
     return new Promise((res, rej) =>
     this.http.post(`${environment.url}/decrypt`, body).subscribe(res, rej));

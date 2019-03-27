@@ -4,11 +4,17 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
 import { environment } from 'src/environments/environment';
 import { ResponseLogin } from '../models/response-login';
+import { Observable } from 'rxjs';
+import { interval, of } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
+  dateExpiration: Date;
+
   constructor(private http: HttpClient, private router: Router) { }
 
   login(user: User) {
@@ -18,8 +24,12 @@ export class LoginService {
           sessionStorage.setItem('token', r.token);
           sessionStorage.setItem('username', r.username);
           sessionStorage.setItem('roles', JSON.stringify(r.roles));
-          this.router.navigate(['/crypter']);
-          res();
+          this.dateExpiration = new Date(r.expiration);
+
+          setTimeout(() => {
+            this.router.navigate(['/crypter']);
+            res();
+          }, 200);
         }
       }, rej));
   }
@@ -27,5 +37,13 @@ export class LoginService {
   logout() {
     sessionStorage.clear();
     setTimeout(() => this.router.navigate(['/']), 100);
+  }
+
+  isExpired(): Observable<boolean> {
+    const time = Math.floor((this.dateExpiration.getTime() - new Date().getTime()) / 1000) + 1;
+    return interval(1000).pipe(
+      map(n => (time - n - 1) <= 0),
+      take(time <= 0 ? 1 : time)
+    );
   }
 }
