@@ -1,6 +1,6 @@
 import { Injectable, Pipe } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { AuthActions, LogouSuccessAction, AuthenticateSuccessAction, AuthenticateFailedAction, LockScreenAction, UnlockScreenAction, UnlockScreenSuccessAction, UnlockScreenFailedAction } from '../actions/auth.actions';
+import { AuthActions, LogouSuccessAction, AuthenticateSuccessAction, AuthenticateFailedAction } from '../actions/auth.actions';
 import { LoginService } from '../../services/login.service';
 import { switchMap, catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs';

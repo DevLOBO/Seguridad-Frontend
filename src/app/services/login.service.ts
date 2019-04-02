@@ -9,7 +9,6 @@ import { interval, of } from 'rxjs';
 import { map, take, switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from '../ngrx/app.reducer';
-import { LockScreenAction } from '../ngrx/actions/auth.actions';
 
 
 @Injectable({
@@ -34,10 +33,6 @@ export class LoginService {
           take(time <= 0 ? 1 : time)
         );
       })
-    ).subscribe(l => {
-      if (l)
-        this.store.dispatch(new LockScreenAction());
-        return;
-    });
+    );
   }
 }
