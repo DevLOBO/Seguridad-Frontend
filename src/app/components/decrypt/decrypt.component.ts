@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { CrypterService } from '../../services/crypter.service';
-import { MatDialog } from '@angular/material';
-import { ModalComponent } from '../modal/modal.component';
 import { CryptInfo } from '../../models/crypt-info';
+import { Validators, FormControl } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/ngrx/app.reducer';
+import { DecryptAction } from '../../ngrx/actions/crypter.actions';
 
 @Component({
   selector: 'app-decrypt',
@@ -10,23 +11,28 @@ import { CryptInfo } from '../../models/crypt-info';
   styles: []
 })
 export class DecryptComponent {
+  key: FormControl;
   img: string;
-  key: string;
   cryptInfo: CryptInfo;
   loading = false;
+  user: string;
+  ok: boolean;
 
-  constructor(private crypterService: CrypterService, private dialog: MatDialog) { }
+  constructor(private store: Store<AppState>) {
+    this.store.subscribe(all => {
+      this.loading = all.crypter.loading;
+      this.cryptInfo = all.crypter.crypt;
+      this.user = all.auth.username;
+      this.ok = all.crypter.ok;
+    });
+
+    this.key = new FormControl('', Validators.required)
+  }
 
   decrypt() {
-    this.loading = true;
-    this.crypterService.decrypt(this.key, this.img)
-      .then(dec =>
-        this.cryptInfo = dec)
-      .catch(err => {
-        this.cryptInfo = {};
-        this.dialog.open(ModalComponent, { width: '*', data: err['error'] });
-      })
-      .finally(() => this.loading = false);
+    const c: CryptInfo = { username: this.user, image: this.img,  key: this.key.value };
+    const a = new DecryptAction(c);
+    this.store.dispatch(a);
   }
 
   convertFileToString(file: File) {

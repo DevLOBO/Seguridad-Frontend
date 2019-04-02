@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { CryptInfo } from '../../models/crypt-info';
-import { CrypterService } from '../../services/crypter.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/ngrx/app.reducer';
+import { EncryptAction } from '../../ngrx/actions/crypter.actions';
 
 @Component({
   selector: 'app-encrypt',
@@ -8,20 +11,28 @@ import { CrypterService } from '../../services/crypter.service';
   styles: []
 })
 export class EncryptComponent {
-  cryptInfo: CryptInfo;
-  msg: string;
-  time: number;
-  email: string;
-  loading = false;
+  formCrypt: FormGroup;
+  loading: boolean;
+  user: string;
+  ok: boolean;
 
-  constructor(private crypterService: CrypterService) { }
+  constructor(private fb: FormBuilder, private store: Store<AppState>) {
+    this.store.subscribe(all => {
+      this.loading = all.crypter.loading;
+      this.user = all.auth.username;
+      this.ok = all.crypter.ok;
+    });
+
+    this.formCrypt = this.fb.group({
+      message: ['', Validators.required],
+      time: ['', [Validators.required, Validators.pattern('([0-9]+)(.(0-9)+)?')]],
+      to: ['', [Validators.required, Validators.email]]
+    });
+  }
 
   encrypt() {
-    this.loading = true;
-    this.crypterService.encrypt(this.msg, this.time, this.email)
-      .then(enc =>
-        this.cryptInfo = enc)
-      .catch(console.log)
-      .finally(() => this.loading = false);
+    const c = { ...this.formCrypt.value, username: this.user };
+    const a = new EncryptAction(c);
+    this.store.dispatch(a);
   }
 }

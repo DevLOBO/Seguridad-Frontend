@@ -6,44 +6,38 @@ import { environment } from 'src/environments/environment';
 import { ResponseLogin } from '../models/response-login';
 import { Observable } from 'rxjs';
 import { interval, of } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map, take, switchMap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { AppState } from '../ngrx/app.reducer';
+import { LockScreenAction } from '../ngrx/actions/auth.actions';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-  dateExpiration: Date;
+  constructor(private http: HttpClient, private router: Router, private store: Store<AppState>) {}
 
-  constructor(private http: HttpClient, private router: Router) { }
-
-  login(user: User) {
-    return new Promise((res, rej) =>
-      this.http.post(`${environment.url}/login`, user).subscribe((r: ResponseLogin) => {
-        if (r.logged) {
-          sessionStorage.setItem('token', r.token);
-          sessionStorage.setItem('username', r.username);
-          sessionStorage.setItem('roles', JSON.stringify(r.roles));
-          this.dateExpiration = new Date(r.expiration);
-
-          setTimeout(() => {
-            this.router.navigate(['/crypter']);
-            res();
-          }, 200);
-        }
-      }, rej));
+  login(user: User): Observable<ResponseLogin> {
+    return this.http.post(`${environment.url}/login`, user);
   }
 
-  logout() {
-    sessionStorage.clear();
-    setTimeout(() => this.router.navigate(['/']), 100);
-  }
+  isExpired() {
+    const that = this;
+    return that.store.select('auth').pipe(
+      switchMap(auth => {
+        const time = Math.floor((new Date(auth.expiration).getTime() - new Date().getTime()) / 1000) + 1;
+        console.log(time);
 
-  isExpired(): Observable<boolean> {
-    const time = Math.floor((this.dateExpiration.getTime() - new Date().getTime()) / 1000) + 1;
-    return interval(1000).pipe(
-      map(n => (time - n - 1) <= 0),
-      take(time <= 0 ? 1 : time)
-    );
+        return interval(1000).pipe(
+          map(n => (time - n - 1) <= 0),
+          take(time <= 0 ? 1 : time)
+        );
+      })
+    ).subscribe(l => {
+      if (l)
+        this.store.dispatch(new LockScreenAction());
+        return;
+    });
   }
 }

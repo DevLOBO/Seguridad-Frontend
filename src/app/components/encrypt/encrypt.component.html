@@ -1,27 +1,27 @@
 <h1>Encriptación</h1>
 <hr>
-<div class="form-row">
-    <div class="form-group w-75">
-        <label for="">Tu mensaje:</label>
-        <input class="form-control" type="text" [(ngModel)]="msg">
+<div [formGroup]="formCrypt">
+    <div class="form-group">
+        <label for="">Escribe tu mensaje:</label>
+        <textarea class="form-control" type="text" rows="5" placeholder="Mensaje" formControlName="message"></textarea>
     </div>
-    <div class="form-group w-25">
-        <label for="">Duración:</label>
-        <input type="number" class="form-control" [(ngModel)]="time" placeholder="Minutos">
+    <div class="form-group">
+        <label for="">¿Cuánto quieres que dure tu mensaje?:</label>
+        <input type="text" class="form-control" placeholder="Minutos" formControlName="time">
     </div>
-</div>
-<div class="form-group">
-    <label for="">Enviar a:</label>
-    <input type="email" class="form-control" [(ngModel)]="email" placeholder="Correo electrónico">
-</div>
-<div class="form-group">
-    <button class="btn btn-outline-primary" (click)="encrypt()" [disabled]="!(msg && time && email) || loading">
-        <span *ngIf="!loading; else load"><i class="fas fa-lock"></i> Encriptar y <i class="fas fa-paper-plane"></i> Enviar</span>
-        <ng-template #load><i class="fas fa-circle-notch fa-spin"></i> Procesando</ng-template>
-    </button>
+    <div class="form-group">
+        <label for="">Enviar a:</label>
+        <input type="email" class="form-control" placeholder="Correo electrónico" formControlName="to">
+    </div>
+    <div class="form-group">
+        <button class="btn btn-outline-primary" (click)="encrypt()" [disabled]="formCrypt.invalid || loading">
+            <span *ngIf="!loading; else load"><i class="fas fa-lock"></i> Encriptar y <i class="fas fa-paper-plane"></i> Enviar</span>
+            <ng-template #load><i class="fas fa-circle-notch fa-spin"></i> Procesando</ng-template>
+        </button>
+    </div>
 </div>
 
-<div *ngIf="!loading && cryptInfo" class="text-center">
+<div *ngIf="!loading && ok" class="text-center">
     <i class="fas fa-check-circle fa-5x"></i>
     <h3 class="text-success">!Mensaje encriptado enviado!</h3>
 </div>

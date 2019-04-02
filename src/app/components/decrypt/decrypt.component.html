@@ -3,7 +3,7 @@
     <hr>
     <div class="form-group">
         <label for="">Llave:</label>
-        <input type="text" class="form-control" [(ngModel)]="key">
+        <input type="text" class="form-control" [formControl]="key">
     </div>
     <div class="form-group">
         <label for="">Mensaje encriptado:</label>
@@ -17,14 +17,14 @@
         </div>
     </div>
     <div class="form-group">
-        <button class="btn btn-primary" (click)="decrypt()" [disabled]="!key || !img || loading">
+        <button class="btn btn-primary" (click)="decrypt()" [disabled]="key.invalid || !img || loading">
             <span *ngIf="!loading; else load"><i class="fas fa-unlock"></i> Desencriptar</span>
             <ng-template #load><i class="fas fa-circle-notch fa-spin"></i> Cargando</ng-template>
         </button>
     </div>
 </div>
 
-<div *ngIf="cryptInfo && (cryptInfo.username && cryptInfo.message)">
+<div *ngIf="cryptInfo">
     <div class="form-group">
         <label for="">Creado por:</label>
         <input type="text" class="form-control" [value]="cryptInfo.username" readonly>

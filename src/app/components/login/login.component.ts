@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from '../../services/login.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/ngrx/app.reducer';
+import { AuthenticateAction } from '../../ngrx/actions/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +14,12 @@ export class LoginComponent {
   error: string;
   loading = false;
 
-  constructor(private fb: FormBuilder, private loginService: LoginService) {
+  constructor(private fb: FormBuilder, private store: Store<AppState>) {
+    this.store.select('auth').subscribe(auth => {
+      this.loading = auth.loading;
+      this.error = auth.error;
+    });
+
     this.formLogin = fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -20,11 +27,8 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    this.loading = true;
-    this.loginService.login(this.formLogin.value)
-      .then(() => this.formLogin.reset())
-      .catch(err => this.error = err['error']['error'])
-      .finally(() => this.loading = false);
+    const a = new AuthenticateAction(this.formLogin.value);
+    this.store.dispatch(a);
   }
 
   get username() { return this.formLogin.get('username') }

@@ -6,18 +6,22 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../ngrx/app.reducer';
 
 @Injectable()
 export class HeaderInterceptorService implements HttpInterceptor {
-  constructor() { }
+  token: string;
+
+  constructor(private store: Store<AppState>) {
+    this.store.select('auth').subscribe(auth => this.token = auth.token);
+  }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = sessionStorage.getItem('token');
-
     request = request.clone({
       setHeaders: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${this.token}`
       }
     });
     

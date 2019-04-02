@@ -14,10 +14,17 @@ import { DecryptComponent } from './components/decrypt/decrypt.component';
 import { HeaderInterceptorService } from './services/header-interceptor.service';
 import { ModalComponent } from './components/modal/modal.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-
-import { DomSecurePipe } from './pipes/dom-secure.pipe';
 import { ReLoginComponent } from './components/re-login/re-login.component';
 
+import { DomSecurePipe } from './pipes/dom-secure.pipe';
+
+import { StoreModule } from '@ngrx/store';
+import { appReducers } from './ngrx/app.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffect } from './ngrx/effects/auth.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
+import { CrypterEffect } from './ngrx/effects/crypter.effects';
 
 @NgModule({
   entryComponents: [
@@ -42,7 +49,10 @@ import { ReLoginComponent } from './components/re-login/re-login.component';
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    StoreModule.forRoot(appReducers),
+    environment.production ? [] : StoreDevtoolsModule.instrument({maxAge:25}),
+    EffectsModule.forRoot([AuthEffect, CrypterEffect])
   ],
   providers: [
     {

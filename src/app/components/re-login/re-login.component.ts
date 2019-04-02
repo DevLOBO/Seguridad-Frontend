@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-import { LoginService } from '../../services/login.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/ngrx/app.reducer';
+import { LogoutAction, UnlockScreenAction } from '../../ngrx/actions/auth.actions';
 
 @Component({
   selector: 'app-re-login',
@@ -14,19 +16,25 @@ export class ReLoginComponent {
 
   constructor(
     private dialogRef: MatDialogRef<ReLoginComponent>,
-    private loginService: LoginService
+    private store: Store<AppState>
   ) {
-    this.username = sessionStorage.getItem('username');
+    this.store.select('auth').subscribe(auth => {
+      this.error = auth.error;
+      this.username = auth.username;
+      
+      if (!auth.locked) this.dialogRef.close();
+    });
   }
 
   login() {
-    this.loginService.login({ username: this.username, password: this.password})
-    .then(() => this.dialogRef.close())
-    .catch(error => this.error = error['error']['error']);
+    const c = { username: this.username, password: this.password };
+    const a = new UnlockScreenAction(c);
+    this.store.dispatch(a);
   }
 
   logout() {
     this.dialogRef.close();
-    this.loginService.logout();
+    const a = new LogoutAction();
+    this.store.dispatch(a);
   }
 }
