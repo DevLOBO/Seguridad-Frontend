@@ -21,6 +21,7 @@ export function crypterReducer(state: CrypterState = initialStae, action: Crypte
         case CrypterActions.DECRYPT_FAILED:
             return {
                 ...state,
+                crypt: undefined,
                 loading: false,
                 error: action.error,
                 ok: false
@@ -40,6 +41,7 @@ export function crypterReducer(state: CrypterState = initialStae, action: Crypte
         case CrypterActions.ENCRYPT_FAILED:
             return {
                 ...state,
+                crypt: undefined,
                 loading: false,
                 error: action.error,
                 ok: false

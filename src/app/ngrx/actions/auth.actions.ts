@@ -8,11 +8,10 @@ export enum AuthActions {
     AUTHENTICATE_FAILED = '[Auth] Authenticate Failed',
     LOGOUT = '[Auth] Logout',
     LOGOUT_SUCCESS = '[Auth] Logout Success',
-    LOCK_SCREEN = '[Auth] Lock Screen',
-    LOCK_SCREEN_SUCCESS = '[Auth] Lock Screen Success',
-    UNLOCK_SCREEN = '[Auth] Unlock Screen',
-    UNLOCK_SCREEN_SUCCESS = '[Auth] Unlock Screen Success',
-    UNLOCK_SCREEN_FAILED = '[Auth] Unlock Screen Failed'
+    LOCK = '[Auth] Lock',
+    UNLOCK = '[Auth] Unlock',
+    UNLOCK_SUCCESS = '[Auth] Unlock Success',
+    UNLOCK_FAILED = '[Auth] Unlock Failed'
 }
 
 export class AuthenticateAction implements Action {
@@ -41,8 +40,34 @@ export class LogouSuccessAction implements Action {
     readonly type = AuthActions.LOGOUT_SUCCESS;
 }
 
+export class LockAction implements Action {
+    readonly type = AuthActions.LOCK;
+}
+
+export class UnlockAction implements Action {
+    readonly type = AuthActions.UNLOCK;
+
+    constructor(public user: User) { }
+}
+
+export class UnlockSuccessAction implements Action {
+    readonly type = AuthActions.UNLOCK_SUCCESS;
+
+    constructor(public date: Date) { }
+}
+
+export class UnlockFailedAction implements Action {
+    readonly type = AuthActions.UNLOCK_FAILED;
+
+    constructor(public error: string) { }
+}
+
 export type AuthTypes = AuthenticateAction |
                         AuthenticateFailedAction |
                         AuthenticateSuccessAction |
                         LogoutAction |
-                        LogouSuccessAction;
+                        LogouSuccessAction |
+                        LockAction |
+                        UnlockAction |
+                        UnlockSuccessAction |
+                        UnlockFailedAction;

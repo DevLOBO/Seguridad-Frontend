@@ -44,6 +44,23 @@ export function authReducer(state: AuthState = initialState, action: AuthTypes):
             return { ...state };
         case AuthActions.LOGOUT_SUCCESS:
             return initialState;
+        case AuthActions.LOCK:
+            return { ...state, locked: true };
+        case AuthActions.UNLOCK:
+            return { ...state, loading: true };
+        case AuthActions.UNLOCK_FAILED:
+            return {
+                ...state,
+                error: action.error,
+                loading: false
+            };
+        case AuthActions.UNLOCK_SUCCESS:
+            return {
+                ...state,
+                locked: false,
+                expiration: action.date,
+                loading: false
+            };
         default:
             return state;
     }
