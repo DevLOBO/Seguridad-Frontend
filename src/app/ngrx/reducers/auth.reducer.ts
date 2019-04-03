@@ -21,7 +21,8 @@ export function authReducer(state: AuthState = initialState, action: AuthTypes):
         case AuthActions.AUTHENTICATE:
             return {
                 ...state,
-                loading: true
+                loading: true,
+                error: undefined
             };
         case AuthActions.AUTHENTICATE_FAILED:
             return {
@@ -47,7 +48,7 @@ export function authReducer(state: AuthState = initialState, action: AuthTypes):
         case AuthActions.LOCK:
             return { ...state, locked: true };
         case AuthActions.UNLOCK:
-            return { ...state, loading: true };
+            return { ...state, loading: true, error: undefined };
         case AuthActions.UNLOCK_FAILED:
             return {
                 ...state,

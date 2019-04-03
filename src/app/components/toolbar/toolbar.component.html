@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
     <span>Proyecto: CryptUNITEC</span>
-    <span class="ml-4" *ngIf="user">Bienvendio {{ user }}</span>
+    <span class="ml-4" *ngIf="user">Bienvenido {{ user }}</span>
 
     <a class="btn btn-primary ml-auto" *ngIf="!logged" [routerLink]="['/login']"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</a>
     <a class="btn btn-danger ml-auto" *ngIf="logged" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
