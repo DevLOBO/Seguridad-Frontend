@@ -25,7 +25,7 @@ export class EncryptComponent {
 
     this.formCrypt = this.fb.group({
       message: ['', Validators.required],
-      time: ['', [Validators.required, Validators.pattern('([0-9]+)(.(0-9)+)?')]],
+      time: ['', [Validators.required, Validators.pattern('[0-9]+(\.[0-9]{1,2})?')]],
       to: ['', [Validators.required, Validators.email]]
     });
   }
